@@ -18,6 +18,21 @@ namespace UrlShortener.Controllers
         {
             repo = context;
         }
+
+        [HttpGet]
+        [Route("GetAll")]
+        public ActionResult GetAll()
+        {
+            UserModel user = (UserModel)HttpContext.Items["User"];
+            if (user != null)
+            {
+                var data = repo.Urls.GetRecords().Where(x => x.UserId == user.Id);
+
+                return Ok(data);
+            }
+            return BadRequest();
+        }
+
         [HttpPost]
         [Route("Create")]
         public ActionResult Create(UrlModel url)
@@ -42,7 +57,7 @@ namespace UrlShortener.Controllers
             {
                 repo.Urls.CreateRecord(url);
                 repo.Save();
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (Exception ex)
             {

@@ -32,7 +32,7 @@ namespace UrlShortener.Controllers
 
             if (token == null)
             {
-                return RedirectToAction("Authenticate");
+                return BadRequest();
             }
             //Request.Headers["Authorization"] = $"Bearer {token}";
             Response.Cookies.Append("Authorization", $"Bearer {token}");
@@ -57,7 +57,7 @@ namespace UrlShortener.Controllers
         public IActionResult Register([FromBody] UserModel user)
         {
             if (repo.Users.GetRecords().Where(x => x.Login == user.Login).FirstOrDefault() != null)
-                return RedirectToAction("Register"); //need to add model errors
+                return BadRequest(); //need to add model errors
             repo.Users.CreateRecord(user);
             repo.Save();
 
