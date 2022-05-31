@@ -98,10 +98,16 @@ namespace UrlShortener.Controllers
         {
             try
             {
-                repo.Urls.DeleteRecord(id);
-                repo.Save();
+                UserModel user = (UserModel)HttpContext.Items["User"];
+                UrlModel record = repo.Urls.GetRecord(id);
 
-                return Ok();
+                if (user.Id ==record.UserId)
+                {
+                    repo.Urls.DeleteRecord(id);
+                    repo.Save();
+                    return Ok();
+                }
+                return BadRequest();
             }
             catch(Exception ex)
             {
