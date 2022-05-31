@@ -61,7 +61,7 @@ namespace UrlShortener.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(); //need to handle error
+                return BadRequest(ex);
             }
         }
 
@@ -88,7 +88,7 @@ namespace UrlShortener.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
 
@@ -111,7 +111,7 @@ namespace UrlShortener.Controllers
             }
             catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
     }
